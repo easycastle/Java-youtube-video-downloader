@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
+import java.awt.event.*;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main extends JFrame {
     private JTextField linkTextField;
@@ -15,7 +12,7 @@ public class Main extends JFrame {
     public Main() {
 
         // GUI
-        super("Youtube Downloader");
+        super("Youtube Video Downloader");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(640, 480);
         setResizable(false);

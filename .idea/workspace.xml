@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6b8d59b-0661-4a68-ba2a-40c0b99a128e" name="Changes" comment="FIX: 패널 재배치">
+    <list default="true" id="e6b8d59b-0661-4a68-ba2a-40c0b99a128e" name="Changes" comment="FEAT: extract() 개발">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -35,6 +35,13 @@
   }
 }]]></component>
   <component name="RunManager" selected="Application.Main">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Java-youtube-downloader" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Java-youtube-downloader" />
@@ -43,13 +50,6 @@
       </method>
     </configuration>
     <configuration name="Main (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Java-youtube-downloader" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main (4)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Java-youtube-downloader" />
       <method v="2">
@@ -73,10 +73,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main (5)" />
-        <item itemvalue="Application.Main (4)" />
         <item itemvalue="Application.Main (3)" />
         <item itemvalue="Application.Main (2)" />
+        <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.Main (5)" />
       </list>
     </recent_temporary>
   </component>
@@ -88,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1687612081213</updated>
-      <workItem from="1687612081214" duration="13203000" />
+      <workItem from="1687612081214" duration="14482000" />
     </task>
     <task id="LOCAL-00001" summary="FEAT: 프로그램 전체 GUI 개발">
       <created>1687614943453</created>
@@ -111,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687620038668</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="FEAT: extract() 개발">
+      <created>1687635615632</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1687635615632</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +128,7 @@
     <MESSAGE value="FEAT: 프로그램 전체 GUI 개발" />
     <MESSAGE value="FEAT: 버튼 리스너(addVideo(), deleteSelectedLink(), deleteAllLink(), browsePath()) 개발" />
     <MESSAGE value="FIX: 패널 재배치" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: 패널 재배치" />
+    <MESSAGE value="FEAT: extract() 개발" />
+    <option name="LAST_COMMIT_MESSAGE" value="FEAT: extract() 개발" />
   </component>
 </project>
