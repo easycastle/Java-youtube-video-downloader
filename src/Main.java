@@ -30,7 +30,7 @@ public class Main extends JFrame {
         JPanel listPanel = new JPanel();
         listPanel.setLayout(new BorderLayout());
         JScrollPane linkScrollPane = new JScrollPane();
-        linkList = new JList<>();
+        linkList = new JList<>(new DefaultListModel<>());
         linkScrollPane.setViewportView(linkList);
         listPanel.add(linkScrollPane, BorderLayout.CENTER);
         linkOperationPanel.add(listPanel, BorderLayout.CENTER);
@@ -54,6 +54,7 @@ public class Main extends JFrame {
         JPanel progressPanel = new JPanel();
         progressPanel.setBorder(BorderFactory.createTitledBorder("진행 상황"));
         progressBar = new JProgressBar(0, 100);
+        progressBar.setPreferredSize(new Dimension(600, 30));
         progressPanel.add(progressBar);
 
         JPanel runPanel = new JPanel();
@@ -74,28 +75,28 @@ public class Main extends JFrame {
         addVideoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addVideo();
             }
         });
 
         deleteSelectionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                deleteSelectedLink();
             }
         });
 
         deleteAllButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                deleteAllLink();
             }
         });
 
         pathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                browsePath();
             }
         });
 
@@ -113,9 +114,84 @@ public class Main extends JFrame {
             }
         });
 
-
         setVisible(true);
     }
+
+    private boolean isLinkAlreadyAdded(DefaultListModel<String> model, String link) {
+        for (int i = 0; i < model.getSize(); i++) {
+            String element = model.getElementAt(i);
+            if (element.equals(link)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addVideo() {
+        String link = linkTextField.getText();
+
+        if (link.equals("")) {
+            JOptionPane.showMessageDialog(this, "링크를 작성하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (link.contains("https://www.youtube.com/") && !link.equals("https://www.youtube.com/")) {
+            DefaultListModel<String> model = (DefaultListModel<String>) linkList.getModel();
+
+            if (model.getSize() > 0 && isLinkAlreadyAdded(model, link)) {
+                JOptionPane.showMessageDialog(this, "이미 추가된 링크입니다.", "경고", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                model.addElement(link);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "유효하지 않은 링크입니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+
+        linkTextField.setText("");
+    }
+
+    private void deleteSelectedLink() {
+        int[] selectedIndices = linkList.getSelectedIndices();
+
+        if (selectedIndices.length == 0) {
+            JOptionPane.showMessageDialog(this, "선택된 링크가 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            DefaultListModel<String> model = (DefaultListModel<String>) linkList.getModel();
+            for (int i = selectedIndices.length - 1; i >= 0; i--) {
+                model.remove(selectedIndices[i]);
+            }
+        }
+    }
+
+    private void deleteAllLink() {
+        DefaultListModel<String> model = (DefaultListModel<String>) linkList.getModel();
+        int size = model.getSize();
+
+        if (size == 0) {
+            JOptionPane.showMessageDialog(this, "링크가 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            int response = JOptionPane.showConfirmDialog(this, "전체 링크를 삭제하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                model.clear();
+            }
+        }
+    }
+
+    private void browsePath() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            pathTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+    }
+
+    private void extract() {
+
+    }
+
     public static void main(String[] args) {
         new Main();
     }
