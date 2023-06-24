@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main extends JFrame {
     private JTextField linkTextField;
@@ -13,7 +16,7 @@ public class Main extends JFrame {
 
         // GUI
         super("Youtube Downloader");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(640, 480);
         setResizable(false);
 
@@ -54,6 +57,8 @@ public class Main extends JFrame {
         JPanel progressPanel = new JPanel();
         progressPanel.setBorder(BorderFactory.createTitledBorder("진행 상황"));
         progressBar = new JProgressBar(0, 100);
+        progressBar.setStringPainted(true);
+        progressBar.setValue(0);
         progressBar.setPreferredSize(new Dimension(600, 20));
         progressPanel.add(progressBar);
 
@@ -111,7 +116,7 @@ public class Main extends JFrame {
         extractionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                extract();
             }
         });
 
@@ -125,6 +130,7 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
+    // Method
     private boolean isLinkAlreadyAdded(DefaultListModel<String> model, String link) {
         for (int i = 0; i < model.getSize(); i++) {
             String element = model.getElementAt(i);
@@ -197,7 +203,56 @@ public class Main extends JFrame {
     }
 
     private void extract() {
+        DefaultListModel<String> model = (DefaultListModel<String>) linkList.getModel();
+        int size = model.getSize();
+        String path = pathTextField.getText();
 
+        progressBar.setValue(0);
+
+        if (size == 0) {
+            JOptionPane.showMessageDialog(this, "링크가 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (path.equals("")) {
+            JOptionPane.showMessageDialog(this, "저장 경로를 지정하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    for (int i = 0; i < size; i++) {
+                        String link = model.getElementAt(i);
+
+                        try {
+                            ProcessBuilder builder = new ProcessBuilder("yt-dlp", "-P", path, link);
+                            Process process = builder.start();
+                            process.waitFor();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        int progress = (i + 1) * 100 / size;
+                        publish(progress);
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void process(java.util.List<Integer> chunks) {
+                    int progress = chunks.get(chunks.size() - 1);
+                    progressBar.setValue(progress);
+                }
+
+                @Override
+                protected void done() {
+                    JOptionPane.showMessageDialog(Main.this, "추출이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+                }
+            };
+
+            worker.execute();
+        }
     }
 
     public static void main(String[] args) {
