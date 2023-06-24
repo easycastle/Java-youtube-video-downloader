@@ -54,7 +54,7 @@ public class Main extends JFrame {
         JPanel progressPanel = new JPanel();
         progressPanel.setBorder(BorderFactory.createTitledBorder("진행 상황"));
         progressBar = new JProgressBar(0, 100);
-        progressBar.setPreferredSize(new Dimension(600, 30));
+        progressBar.setPreferredSize(new Dimension(600, 20));
         progressPanel.add(progressBar);
 
         JPanel runPanel = new JPanel();
@@ -63,12 +63,20 @@ public class Main extends JFrame {
         runPanel.add(extractionButton);
         runPanel.add(closeButton);
 
+        JPanel pathProgressPanel = new JPanel();
+        pathProgressPanel.setLayout(new BorderLayout());
+        pathProgressPanel.add(pathPanel, BorderLayout.NORTH);
+        pathProgressPanel.add(progressPanel, BorderLayout.CENTER);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(pathProgressPanel, BorderLayout.NORTH);
+        bottomPanel.add(runPanel, BorderLayout.CENTER);
+
         setLayout(new BorderLayout());
         add(linkPanel, BorderLayout.NORTH);
         add(linkOperationPanel, BorderLayout.CENTER);
-        add(pathPanel, BorderLayout.SOUTH);
-        add(progressPanel, BorderLayout.SOUTH);
-        add(runPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.SOUTH);
 
 
         // Action Listener
